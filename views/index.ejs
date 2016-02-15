@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    测试数据<br>
+    <table>
+      <tr>
+        <th>图片</th>
+        <th>名字</th>
+        <th>之前价格</th>
+        <th>折后价格</th>
+      </tr>
+
+      <%for(var j= 0; j < 30; j++) { %>
+      <tr>
+        <td><img style="max-height: 50px" src="<%= image[j]%>"/></td>
+        <td><%= name[j]%></td>
+        <td><%= bprice[j]%></td>
+        <td><%= aprice[j]%></td>
+      </tr>
+      <%}%>
+
+    </table>
+  </body>
+</html>
