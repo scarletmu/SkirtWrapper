@@ -18,10 +18,10 @@
 
       <%for(var j= 0; j < 30; j++) { %>
       <tr>
-        <td><img style="max-height: 50px" src="<%= image[j]%>"/></td>
-        <td><%= name[j]%></td>
-        <td><%= bprice[j]%></td>
-        <td><%= aprice[j]%></td>
+        <td><img style="max-height: 50px" src="<%= data[j].image%>"/></td>
+        <td><%= data[j].name%></td>
+        <td><%= data[j].bprice%></td>
+        <td><%= data[j].aprice%></td>
       </tr>
       <%}%>
 
