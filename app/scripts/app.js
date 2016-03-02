@@ -5,6 +5,7 @@ angular
   .module('skirtWrapper',[
     'ngAnimate',
     'ngMaterial',
+    'ngAria',
     'ui.router'
   ])
   .config(function($stateProvider, $urlRouterProvider){
@@ -14,26 +15,14 @@ angular
     //
     // Now set up the states
     $stateProvider
-      .state('state1', {
-        url: "/state1",
-        templateUrl: "partials/state1.html"
+      .state('/', {
+        url: "/",
+        templateUrl: "views/main.html"
       })
-      .state('state1.list', {
-        url: "/list",
-        templateUrl: "partials/state1.list.html",
-        controller: function($scope) {
-          $scope.items = ["A", "List", "Of", "Items"];
-        }
+      .state('saleList', {
+        url: "/saleList",
+        templateUrl: "views/saleList.html",
+        controller:"saleListCtrl",
+        controllerAs:"saleList"
       })
-      .state('state2', {
-        url: "/state2",
-        templateUrl: "partials/state2.html"
-      })
-      .state('state2.list', {
-        url: "/list",
-        templateUrl: "partials/state2.list.html",
-        controller: function($scope) {
-          $scope.things = ["A", "Set", "Of", "Things"];
-        }
-      });
   });

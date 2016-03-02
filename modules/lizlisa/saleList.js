@@ -2,23 +2,19 @@
  * Created by Mu on 16/2/16.
  */
 'use strict';
-var saleList = require('../model/saleList');
+var saleList = require('../../model/lizlisa/saleList');
 var request = require('request');
 var cheerio = require('cheerio');
 var Q = require('q');
+var url = require('../../utils/url');
 
 exports.parse = function () {
   var result = [],
     deffered = Q.defer();
-  request('http://www.tokyokawaiilife.jp/shop/liz-lisa/item/list/stock_available/1/category_id/102/page/1', function (err, response, body) {
-    if (err) {
-      console.log(err);
-      deffered.reject(err);
-    } else if (response && body) {
+  request(url.lizlisa.saleList+'1', function (err, response, body) {
       let $ = cheerio.load(body);
       let list = $('.sectionContent .row-fluid').children();
       let page = $('.pageNumber').children();
-      console.log(page);
       let count = list.length;
       for (let i = 0; i < count; i++) {
         let item = list[i].children;
@@ -31,11 +27,7 @@ exports.parse = function () {
         };
         result.push(single);
       }
-      deffered.resolve(result);
-    }
-    return saleList.save(result)
-      .then(function(data){
-        return deffered.promise;
-      })
+      return saleList.save(result);
   });
+
 };

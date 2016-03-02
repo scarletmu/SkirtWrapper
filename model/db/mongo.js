@@ -3,6 +3,7 @@
  */
 var mongoose = require('mongoose');
 var Config = require('../../config');
+mongoose.Promise = require('bluebird');
 
 mongoose.connect('mongodb://' + Config.mongodb.host + '/' + Config.mongodb.db, {
   server: {
@@ -15,6 +16,10 @@ const NewListSchma = new mongoose.Schema({
   Image:String,
   Price:String,
   SalePrice:String
+});
+
+const SaleListSchema = new mongoose.Schema({
+  Name:String
 });
 
 exports.NewListModel = mongoose.model('newList',NewListSchma);
