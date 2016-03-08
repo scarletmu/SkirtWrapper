@@ -19,8 +19,10 @@ const NewListSchma = new mongoose.Schema({
 });
 
 const SaleListSchema = new mongoose.Schema({
-  Name:String
+  Name:String,
+  Image:String,
+  Price:String
 });
 
 exports.NewListModel = mongoose.model('newList',NewListSchma);
-
+exports.SaleListModel = mongoose.model('saleList',SaleListSchema);
