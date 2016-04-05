@@ -2,13 +2,13 @@
  * Created by Mu on 16/2/16.
  */
 'use strict';
-var saleList = require('../../model/lizlisa/saleList');
-var request = require('request');
-var cheerio = require('cheerio');
-var Q = require('q');
-var url = require('../../utils/url');
+const saleList = require('../model/lizlisa');
+const request = require('request');
+const cheerio = require('cheerio');
+const Q = require('q');
+const url = require('../utils/url');
 
-exports.parse = function () {
+exports.getList = function () {
   var result = [],
     deffered = Q.defer();
   request(url.lizlisa.saleList+'1', function (err, response, body) {

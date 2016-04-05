@@ -4,7 +4,7 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
-var saleList = require('../modules/lizlisa/saleList');
+var lizlisa = require('../modules/lizlisa');
 
 router.get('/',function(req,res,next){
   saleList.parse().then(function(data){

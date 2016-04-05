@@ -19,9 +19,9 @@ angular
         url: "/",
         templateUrl: "views/main.html"
       })
-      .state('saleList', {
-        url: "/saleList",
-        templateUrl: "views/saleList.html",
+      .state('lizlisa', {
+        url: "/lizlisa",
+        templateUrl: "views/lizlisa/saleList.html",
         controller:"saleListCtrl",
         controllerAs:"saleList"
       })
