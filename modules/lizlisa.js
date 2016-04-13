@@ -9,8 +9,7 @@ const Q = require('q');
 const url = require('../utils/url');
 
 exports.getList = function () {
-  var result = [],
-    deffered = Q.defer();
+  var result = [];
   request(url.lizlisa.saleList+'1', function (err, response, body) {
       let $ = cheerio.load(body);
       let list = $('.sectionContent .row-fluid').children();
