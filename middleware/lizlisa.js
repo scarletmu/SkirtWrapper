@@ -5,7 +5,6 @@
 const saleList = require('../model/lizlisa');
 const request = require('request');
 const cheerio = require('cheerio');
-const Q = require('q');
 const url = require('../utils/url');
 
 exports.getList = function () {
@@ -13,7 +12,6 @@ exports.getList = function () {
   request(url.lizlisa.saleList+'1', function (err, response, body) {
       let $ = cheerio.load(body);
       let list = $('.sectionContent .row-fluid').children();
-      let page = $('.pageNumber').children();
       let count = list.length;
       for (let i = 0; i < count; i++) {
         let item = list[i].children;

@@ -2,9 +2,12 @@
  * Created by Mu on 16/2/23.
  */
 'use strict';
-var express = require('express');
-var router = express.Router();
-var lizlisa = require('../modules/lizlisa');
+const express = require('express');
+
+const router = express.Router();
+
+const lizlisa = require('../modules/lizlisa');
+
 
 router.get('/',function(req,res,next){
   saleList.parse().then(function(data){
