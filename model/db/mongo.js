@@ -11,18 +11,18 @@ mongoose.connect('mongodb://' + Config.mongodb.host + '/' + Config.mongodb.db, {
   }
 });
 
-const NewListSchma = new mongoose.Schema({
+const SaleListSchema = new mongoose.Schema({
   Name:String,
   Image:String,
   Price:String,
   SalePrice:String
 });
 
-const SaleListSchema = new mongoose.Schema({
+const NewListSchema = new mongoose.Schema({
   Name:String,
   Image:String,
   Price:String
 });
 
-exports.NewListModel = mongoose.model('newList',NewListSchma);
-exports.SaleListModel = mongoose.model('saleList',SaleListSchema);
+exports.NewListModel = mongoose.model('newList', NewListSchema);
+exports.SaleListModel = mongoose.model('saleList', SaleListSchema);

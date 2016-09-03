@@ -4,6 +4,6 @@
 'use strict';
 var NewList = require('./db/mongo').NewListModel;
 
-exports.save = function(args){
+exports.saveNewList = function(args){
   return NewList.insertMany(args);
 };
