@@ -4,7 +4,8 @@
 module.exports = {
   lizlisa:{
    saleList:'http://www.tokyokawaiilife.jp/shop/liz-lisa/item/list/stock_available/1/category_id/102/page/',
-   example:'http://www.tokyokawaiilife.jp/shop/liz-lisa/item/list/stock_available/1/category_id/5/page/1'
+   newList:'http://www.tokyokawaiilife.jp/item/new_arrival/index/',
+   search:'http://www.tokyokawaiilife.jp/item/search'
   },
   axes:{
     url:'http://shop.axesfemme.com/Form/Product/ProductList.aspx?shop=0&cat=&bid=femme&pid=&vid=&swrd=&img=2&sort=07&cicon=1&min=&max=&udns=1&dosp=&pno='

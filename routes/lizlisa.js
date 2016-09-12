@@ -6,13 +6,12 @@ const express = require('express');
 
 const router = express.Router();
 
-const lizlisa = require('../modules/lizlisa');
+const lizlisa = require('../middleware/lizlisa');
 
 
 router.get('/',function(req,res,next){
-  saleList.parse().then(function(data){
-    res.json(data);
-  }).catch((err) => {console.log(err);res.status(403).end();});
+  lizlisa.getList();
+  res.status(200).end();
 });
 
 module.exports = router;

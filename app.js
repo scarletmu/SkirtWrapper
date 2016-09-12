@@ -8,6 +8,10 @@ var fs = require('fs');
 
 var app = express();
 
+app.get('/', function (req, res) {
+  res.sendFile(__dirname,'app/index.html');
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
