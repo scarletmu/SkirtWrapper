@@ -4,7 +4,7 @@
 module.exports = {
   lizlisa:{
    saleList:'http://www.tokyokawaiilife.jp/shop/liz-lisa/item/list/stock_available/1/category_id/102/page/',
-   newList:'http://www.tokyokawaiilife.jp/item/new_arrival/index/',
+   newArrival:'http://www.tokyokawaiilife.jp/item/new_arrival/index/',
    search:'http://www.tokyokawaiilife.jp/item/search'
   },
   axes:{

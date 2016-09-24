@@ -24,8 +24,8 @@ ReactDOM.render(
     <Provider store={ Store }>
         <Router history={ browserHistory }>
             <Route path="/" component={ ConnectedApp }>
-                <IndexRoute page="main" component={ Main }/>
-                <Route path="about" component={ About }/>
+                <IndexRoute page="#/main" component={ Main }/>
+                <Route path="#/about" component={ About }/>
             </Route>
         </Router>
     </Provider>, 
