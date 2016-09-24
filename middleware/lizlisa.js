@@ -7,40 +7,42 @@ const request = require('request');
 const cheerio = require('cheerio');
 const url = require('../utils/url');
 
-exports.updateSaleList = function () {
-  let result = [];
-  request(url.lizlisa.saleList + '1', function (err, response, body) {
-    let $ = cheerio.load(body);
-    let list = $('.sectionContent .row-fluid').children();
-    let count = list.length;
-    for (let i = 0; i < count; i++) {
-      let item = list[i].children;
-      let info = item[3].children;
-      let single = {
-        Name:info[5].children[0].children[0].data,
-        Image:item[1].children[0].children[1].attribs.src,
-        Price:info[7].children[1].children[0].data,
-        SalePrice:info[7].children[3].children[0].data
-      };
-      result.push(single);
-    }
-    saleList.saveNewList(result)
-    .then((data) => {
-      console.log('save success');
-      console.log(data);
-    }).catch((err) => {
-      console.log('save error');
-      console.error(err);
+let me = this;
+me.saleList = function () {
+  return new Promise((resolve, reject) => {
+    request(url.lizlisa.saleList, function (err, response, body) {
+      if(err){
+        reject(err);
+      }
+      let $ = cheerio.load(body);
+      let list = me.readList($);
+      resolve(list);
     });
-  });
+  })
 };
 
 
-exports.updateNewList = function(){
+
+me.readList = function ($){
   let result = [];
-  for(let i = 0; i++; i < 5){
-    request(url.lizlisa.newList + i, (err, res, body) => {
-      let $ = cheerio.load(body);
-    })
+  //ul下所有li节点
+  let list = $('.sectionContent .row-fluid').children();
+  for (let i = 0; i < list.length; i++) {
+    let figure = list[i].children[1];
+    let itemText = list[i].children[3];
+    let url = 'http://www.tokyokawaiilife.jp' + figure.children[0].attribs.href;
+    let singleItem = {
+      Url: url,
+      Avatar: figure.children[0].children[1].attribs.src,
+      Name:itemText.children[5].children[0].children[0].data,
+      Price:itemText.children[7].children[1].children[0].data,
+      SalePrice:itemText.children[7].children[3].children[0].data
+    };
+    result.push(singleItem);
   }
+  return result;
+};
+
+module.exports = {
+  saleList: me.saleList
 }

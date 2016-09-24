@@ -10,8 +10,12 @@ const lizlisa = require('../middleware/lizlisa');
 
 
 router.get('/',function(req,res,next){
-  lizlisa.getList();
-  res.status(200).end();
+  lizlisa.saleList().then((list) => {
+    res.status(200).json(list);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
 });
 
 module.exports = router;
