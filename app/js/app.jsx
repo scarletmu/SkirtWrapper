@@ -13,10 +13,11 @@ injectTapEventPlugin();
 
 //Components
 import Test from './components/Test.jsx';
+import Header from './components/Header.jsx';
+//Page
 import Main from './page/main.jsx';
 import About from './page/about.jsx';
-import Header from './components/Header.jsx';
-
+import LizLisa from  './page/lizlisa.jsx'
 
 export default class App extends React.Component {
     constructor (props, context) {
@@ -52,6 +53,7 @@ ReactDOM.render(
         <Router history={ browserHistory }>
             <Route path="/" component={ ConnectedApp }>
                 <IndexRoute page="/main" component={ Main }/>
+                <Route path="/lizlisa" component={ LizLisa }/>
                 <Route path="/about" component={ About }/>
             </Route>
         </Router>

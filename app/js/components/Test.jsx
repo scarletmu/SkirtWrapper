@@ -6,7 +6,7 @@ import {Link} from 'react-router'
 export default class Test extends React.Component {
   render(){
     return (
-      <Link to={`/about`}>About</Link>
+      <Link to={`/lizlisa`}>About</Link>
     );
   }
 };

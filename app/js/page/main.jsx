@@ -7,7 +7,6 @@ export default class About extends React.Component {
     render () {
         let { drawerStatus } = this.props;
         return (
-            <MuiThemeProvider>
                 <div style={{
                     flex: 1,
                     textAlign: 'center'
@@ -15,7 +14,6 @@ export default class About extends React.Component {
                 <h1>{drawerStatus}</h1>
                 <Test></Test>
                 </div>
-            </MuiThemeProvider>
         );
     }
 }
