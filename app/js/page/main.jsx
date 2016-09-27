@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Test from '../compoments/Test.jsx';
 export default class About extends React.Component {
     render () {
         return (
@@ -9,6 +9,7 @@ export default class About extends React.Component {
                 paddingTop: 100
             }}>
               <h1>Main</h1>
+              <Test></Test>
             </div>
         );
     }

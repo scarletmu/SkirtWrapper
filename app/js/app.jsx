@@ -14,7 +14,7 @@ import About from './page/about.jsx';
 
 const App = () => (
   <MuiThemeProvider>
-    <Test />
+    <Main />
   </MuiThemeProvider>
 );
 
