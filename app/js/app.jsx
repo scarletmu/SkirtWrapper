@@ -7,25 +7,28 @@ import { Provider, connect } from 'react-redux';
 const Action = require('./actions/common.js');
 const Store = require('./stores/common.js');
 
-import Test from './compoments/Test.jsx';
+import Test from './components/Test.jsx';
 import Main from './page/main.jsx';
 import About from './page/about.jsx';
 
 
-const App = () => (
-  <MuiThemeProvider>
-    <Main />
-  </MuiThemeProvider>
-);
-
+export default class App extends React.Component {
+    render () {
+        return (
+            <MuiThemeProvider>
+                {this.props.children}
+            </MuiThemeProvider>
+        );
+    }
+}
 const ConnectedApp = connect(state => state)(App);
 
 ReactDOM.render(
     <Provider store={ Store }>
         <Router history={ browserHistory }>
             <Route path="/" component={ ConnectedApp }>
-                <IndexRoute page="#/main" component={ Main }/>
-                <Route path="#/about" component={ About }/>
+                <IndexRoute page="/main" component={ Main }/>
+                <Route path="/about" component={ About }/>
             </Route>
         </Router>
     </Provider>, 

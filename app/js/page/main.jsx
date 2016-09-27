@@ -1,5 +1,6 @@
 import React from 'react';
-import Test from '../compoments/Test.jsx';
+import Test from '../components/Test.jsx';
+
 export default class About extends React.Component {
     render () {
         return (
