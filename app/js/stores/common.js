@@ -5,8 +5,11 @@ import { combineReducers, createStore } from 'redux';
 
 function reducer(state = {}, action) {
     switch (action.type) {
-    default:
-        return state;
+        case Action.types.setDrawer:{
+            state.drawerStatus = action.status;
+            return Object.assign({},state);
+        }
+        default:return state;
     }
 }
 let reducers = combineReducers({ reducer });

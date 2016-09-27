@@ -1,23 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+//Material
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+//ReactRouter && Redux
 import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import { Provider, connect } from 'react-redux';
 const Action = require('./actions/common.js');
 const Store = require('./stores/common.js');
+//Tap Event
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
+//Components
 import Test from './components/Test.jsx';
 import Main from './page/main.jsx';
 import About from './page/about.jsx';
+import Header from './components/Header.jsx';
 
 
 export default class App extends React.Component {
+    constructor (props, context) {
+        super(props, context);
+        this.state = {
+        };
+    }
+    componentWillMount () {
+        this.props.dispatch(Action.setDrawer('Hello'));
+    }
     render () {
+        const Child = this.props.children;
+        const style = {
+        }
+        let {drawerStatus} = this.props.reducer;
+        const props = {
+            '/main': {
+                drawerStatus: drawerStatus,
+            }
+        }
         return (
-            <MuiThemeProvider>
-                {this.props.children}
-            </MuiThemeProvider>
+            <div>
+                <Header style={style}/>
+                {Child && React.cloneElement(Child, props[Child.props.route.page || Child.props.route.path])}
+            </div>
         );
     }
 }
