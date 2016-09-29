@@ -1,3 +1,4 @@
+//React
 import React from 'react';
 import ReactDOM from 'react-dom';
 //Material
@@ -14,6 +15,7 @@ injectTapEventPlugin();
 //Components
 import Test from './components/Test.jsx';
 import Header from './components/Header.jsx';
+import LeftDrawer from './components/LeftDrawer.jsx';
 //Page
 import Main from './page/main.jsx';
 import About from './page/about.jsx';
@@ -25,8 +27,11 @@ export default class App extends React.Component {
         this.state = {
         };
     }
+    handleDrawerStatus (status){
+        this.props.dispatch(Action.setDrawer(status));
+    }
     componentWillMount () {
-        this.props.dispatch(Action.setDrawer('Hello'));
+        this.props.dispatch(Action.setDrawer(true));
     }
     render () {
         const Child = this.props.children;
@@ -35,12 +40,18 @@ export default class App extends React.Component {
         let {drawerStatus} = this.props.reducer;
         const props = {
             '/main': {
-                drawerStatus: drawerStatus,
+            },
+            '/lizlisa': {
+
+            },
+            '/about': {
+
             }
         }
         return (
             <div>
-                <Header style={style}/>
+                <Header style={style} handleDrawerStatus={handleDrawerStatus}/>
+                <LeftDrawer drawerStatus={drawerStatus}/>
                 {Child && React.cloneElement(Child, props[Child.props.route.page || Child.props.route.path])}
             </div>
         );

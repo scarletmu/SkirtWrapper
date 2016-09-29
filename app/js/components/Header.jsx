@@ -4,9 +4,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 export default class Header extends React.Component {
   render(){
+    this.handleTouchTap = () => {
+      
+    }
     return (
       <MuiThemeProvider>
-        <AppBar title="Title" style={{flex: 1}}/>
+        <AppBar 
+          title="Title"
+          onTitleTouchTap={handleTouchTap}
+          style={{flex: 1}}
+        />
       </MuiThemeProvider>
     );
   }

@@ -6,7 +6,6 @@ import LeftNav from '../components/LeftNav.jsx';
 
 export default class LizLisa extends React.Component {
     render () {
-        
         return (
             <MuiThemeProvider>
                 <div style={{display: "flex"}}>
