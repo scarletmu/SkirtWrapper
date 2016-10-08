@@ -3,18 +3,19 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 //Component
 import LeftNav from '../components/LeftNav.jsx';
+import ItemList from '../components/ItemList.jsx';
 
 export default class LizLisa extends React.Component {
+    componentDidMount () {
+      this.props.setListsAsync();
+    }
     render () {
+        let { GridLists } = this.props;
         return (
             <MuiThemeProvider>
-                <div style={{display: "flex"}}>
+                <div id="MainList" style={{display: "flex"}}>
                   <LeftNav/>
-                  <div style={{
-                    'textAlign': 'center'
-                  }}>
-                    <h1>Hello</h1>
-                  </div>
+                  <ItemList GridLists={ GridLists }/>
                 </div>
             </MuiThemeProvider>
         );

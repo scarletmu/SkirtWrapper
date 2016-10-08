@@ -9,6 +9,10 @@ function reducer(state = {}, action) {
             state.drawerStatus = action.status;
             return Object.assign({},state);
         }
+        case Action.types.setLists:{
+            state.GridLists = action.lists;
+            return Object.assign({},state);
+        }
         default:return state;
     }
 }

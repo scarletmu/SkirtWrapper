@@ -14,7 +14,7 @@ export default class Header extends React.Component {
     return (
       <MuiThemeProvider>
         <AppBar 
-          title="Title"
+          title="Skirt Wrapper"
           onLeftIconButtonTouchTap={this.handleDrawerStatus}
           style={{flex: 1}}
         />

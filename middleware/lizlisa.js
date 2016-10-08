@@ -1,13 +1,13 @@
-/**
- * Created by Mu on 16/2/16.
- */
 'use strict';
-const saleList = require('../model/lizlisa');
+
 const request = require('request');
 const cheerio = require('cheerio');
 const url = require('../utils/url');
 const title = 'http://www.tokyokawaiilife.jp';
 let me = this;
+const newListModel = require('../model/newList');
+const saleListModel = require('../model/saleList');
+
 me.saleList = () => {
   return new Promise((resolve, reject) => {
     request(url.lizlisa.saleList, function (err, response, body) {
@@ -16,6 +16,7 @@ me.saleList = () => {
       }
       let $ = cheerio.load(body);
       let list = me.readList($);
+      saleListModel.saveSaleList(list);
       resolve(list);
     });
   })
@@ -75,7 +76,8 @@ me.readList = ($) => {
         Avatar: figure.children[0].children[1].attribs.src,
         Name:itemText.children[5].children[0].children[0].data,
         Price:itemText.children[7].children[1].children[0].data,
-        SalePrice:itemText.children[7].children[3].children[0].data
+        SalePrice:itemText.children[7].children[3].children[0].data,
+        Brand: 'LizLisa'
       };
     }else{
       singleItem = {
@@ -83,6 +85,7 @@ me.readList = ($) => {
         Avatar: figure.children[0].children[1].attribs.src,
         Name:itemText.children[5].children[0].children[0].data,
         Price:itemText.children[7].children[0].data,
+        Brand: 'LizLisa'
       };
     }    
     result.push(singleItem);
@@ -90,7 +93,12 @@ me.readList = ($) => {
   return result;
 };
 
+me.getSaleList = () => {
+  return saleListModel.getSaleList(1);
+}
+
 module.exports = {
+  getSaleList: me.getSaleList,
   saleList: me.saleList,
   newArrival: me.newArrival,
   readArrivalNavList: me.readArrivalNavList

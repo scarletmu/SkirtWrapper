@@ -12,16 +12,22 @@ mongoose.connect('mongodb://' + Config.mongodb.host + '/' + Config.mongodb.db, {
 });
 
 const SaleListSchema = new mongoose.Schema({
-  Name:String,
-  Image:String,
-  Price:String,
-  SalePrice:String
+  Url: String,
+  Avatar: String,
+  Name: String,
+  Price: String,
+  SalePrice: String,
+  Brand: String,
+  createdAt: {type: Date, default: Date.now }
 });
 
 const NewListSchema = new mongoose.Schema({
-  Name:String,
-  Image:String,
-  Price:String
+  Url: String,
+  Avatar: String,
+  Name: String,
+  Price: String,
+  Brand: String,
+  createdAt: {type: Date, default: Date.now }
 });
 
 exports.NewListModel = mongoose.model('newList', NewListSchema);

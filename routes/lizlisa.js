@@ -18,6 +18,15 @@ router.get('/salelist',function(req,res,next){
   });
 });
 
+router.get('/getsalelist',function(req,res,next){
+  lizlisa.getSaleList().then((list) => {
+    res.status(200).json(list);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+});
+
 router.get('/newarrival',function(req,res,next){
   lizlisa.newArrival().then((list) => {
     res.status(200).json(list);

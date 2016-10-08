@@ -1,5 +1,4 @@
 import React from 'react';
-import Test from '../components/Test.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
@@ -10,8 +9,7 @@ export default class About extends React.Component {
                     flex: 1,
                     textAlign: 'center'
                 }}>
-                <h1>Hello</h1>
-                <Test></Test>
+                    <h1>WelCome To A Skirt Wrapper Main Page</h1>
                 </div>
         );
     }
