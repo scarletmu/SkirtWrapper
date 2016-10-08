@@ -31,7 +31,7 @@ export default class App extends React.Component {
         this.props.dispatch(Action.setDrawer(status));
     }
     componentWillMount () {
-        this.props.dispatch(Action.setDrawer(true));
+        this.props.dispatch(Action.setDrawer(false));
     }
     render () {
         const Child = this.props.children;
@@ -50,8 +50,9 @@ export default class App extends React.Component {
         }
         return (
             <div>
-                <Header style={style} handleDrawerStatus={handleDrawerStatus}/>
-                <LeftDrawer drawerStatus={drawerStatus}/>
+                <Header style={style} handleDrawerStatus={ this.handleDrawerStatus.bind(this) }/>
+                <LeftDrawer drawerStatus={drawerStatus} handleDrawerStatus={ this.handleDrawerStatus.bind(this) }/>
+                {drawerStatus}
                 {Child && React.cloneElement(Child, props[Child.props.route.page || Child.props.route.path])}
             </div>
         );

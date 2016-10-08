@@ -11,7 +11,7 @@ export default class LizLisa extends React.Component {
                 <div style={{display: "flex"}}>
                   <LeftNav/>
                   <div style={{
-                    'text-align': 'center'
+                    'textAlign': 'center'
                   }}>
                     <h1>Hello</h1>
                   </div>
