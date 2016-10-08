@@ -1,5 +1,9 @@
+/*移动端优化 隐藏左侧导航*/
 @media all and (max-width: 500px) {
   #MainList {
     flex-direction: column;
+  }
+  #LeftNav {
+    display: none;
   }
 }

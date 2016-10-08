@@ -14,7 +14,7 @@ export default class LeftNav extends React.Component {
       minWidth: '200px'
     }
     return (
-      <List style={LeftNavStyle}>
+      <List id="LeftNav" style={LeftNavStyle}>
         <ListItem primaryText="Inbox" leftIcon={<ContentInbox />} />
         <ListItem primaryText="Starred" leftIcon={<ActionGrade />} />
         <ListItem primaryText="Sent mail" leftIcon={<ContentSend />} />

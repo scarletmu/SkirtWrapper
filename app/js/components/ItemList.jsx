@@ -11,6 +11,7 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
+    padding: '0 10px'
   },
   gridList: {
     display: 'flex',
