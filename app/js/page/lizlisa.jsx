@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import LeftNav from '../components/LeftNav.jsx';
 import ItemList from '../components/ItemList.jsx';
 import BottomTabs from '../components/BottomTabs.jsx';
+
 export default class LizLisa extends React.Component {
     componentDidMount () {
       this.props.setListsAsync();

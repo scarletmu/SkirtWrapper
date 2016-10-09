@@ -1,10 +1,8 @@
 import React from 'react';
 import {List, ListItem} from 'material-ui/List';
 //ICON
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
+import ShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
+import ViewList from 'material-ui/svg-icons/action/view-list';
 
 export default class LeftNav extends React.Component {
   render(){
@@ -15,11 +13,9 @@ export default class LeftNav extends React.Component {
     }
     return (
       <List id="LeftNav" style={LeftNavStyle}>
-        <ListItem primaryText="Inbox" leftIcon={<ContentInbox />} />
-        <ListItem primaryText="Starred" leftIcon={<ActionGrade />} />
-        <ListItem primaryText="Sent mail" leftIcon={<ContentSend />} />
-        <ListItem primaryText="Drafts" leftIcon={<ContentDrafts />} />
-        <ListItem primaryText="Inbox" leftIcon={<ContentInbox />} />
+        <ListItem primaryText="折扣" leftIcon={<ShoppingCart />} />
+        <ListItem primaryText="上新" leftIcon={<ShoppingCart />} />
+        <ListItem primaryText="总汇" leftIcon={<ViewList />} />
       </List>
     );
   }

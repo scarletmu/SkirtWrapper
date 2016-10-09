@@ -30,5 +30,12 @@ const NewListSchema = new mongoose.Schema({
   createdAt: {type: Date, default: Date.now }
 });
 
+const CalendarSchema = new mongoose.Schema({
+  Date: String,
+  Number: String,
+  createdAt: {type: Date, default: Date.now }
+})
+
 exports.NewListModel = mongoose.model('newList', NewListSchema);
 exports.SaleListModel = mongoose.model('saleList', SaleListSchema);
+exports.CalendarModel = mongoose.model('calendar', CalendarSchema, 'calendar');

@@ -1,7 +1,9 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
+//ICON
 import FontIcon from 'material-ui/FontIcon';
-import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
+import ShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
+import ViewList from 'material-ui/svg-icons/action/view-list';
 
 export default class BottomTabs extends React.Component{
   render () {
@@ -13,15 +15,15 @@ export default class BottomTabs extends React.Component{
     return (
       <Tabs id="BottomTabs" style={bottomStyle}>
         <Tab
-          icon={<MapsPersonPin />}
+          icon={<ShoppingCart />}
           label="折扣"
         />
         <Tab
-          icon={<MapsPersonPin />}
+          icon={<ShoppingCart />}
           label="上新"
         />
         <Tab
-          icon={<MapsPersonPin />}
+          icon={<ViewList />}
           label="总汇"
         />
       </Tabs>
