@@ -4,13 +4,68 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 export default class About extends React.Component {
     render () {
+        const MainStyle = {
+
+        }
         return (
-                <div style={{
-                    flex: 1,
-                    textAlign: 'center'
-                }}>
-                    <h1>WelCome To A Skirt Wrapper Main Page</h1>
-                </div>
+        <MuiThemeProvider>
+        <div id="MainPageCards" style={MainStyle}>
+            <Card>
+                <CardMedia
+                    overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
+                >
+                <img src="http://w2.hoopchina.com.cn/f1/b8/8d/f1b88d90a49f1e22426081608b16d043001.jpg" />
+                </CardMedia>
+                <CardTitle title="Liz Lisa" subtitle="Card subtitle" />
+                <CardText>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+                    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                </CardText>
+                <CardActions>
+                    <FlatButton label="Action1" />
+                    <FlatButton label="Action2" />
+                </CardActions>
+            </Card>
+            <Card>
+                <CardMedia
+                    overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
+                >
+                <img src="http://w2.hoopchina.com.cn/f1/b8/8d/f1b88d90a49f1e22426081608b16d043001.jpg" />
+                </CardMedia>
+                <CardTitle title="Liz Lisa" subtitle="Card subtitle" />
+                <CardText>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+                    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                </CardText>
+                <CardActions>
+                    <FlatButton label="Action1" />
+                    <FlatButton label="Action2" />
+                </CardActions>
+            </Card>
+            <Card>
+                <CardMedia
+                    overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
+                >
+                <img src="http://w2.hoopchina.com.cn/f1/b8/8d/f1b88d90a49f1e22426081608b16d043001.jpg" />
+                </CardMedia>
+                <CardTitle title="Liz Lisa" subtitle="Card subtitle" />
+                <CardText>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+                    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                </CardText>
+                <CardActions>
+                    <FlatButton label="Action1" />
+                    <FlatButton label="Action2" />
+                </CardActions>
+            </Card>
+         </div>   
+         </MuiThemeProvider>   
         );
     }
 }

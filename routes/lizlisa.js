@@ -38,4 +38,14 @@ router.get('/newarrival',function(req,res,next){
   });
 });
 
+router.get('/getcalendarlist', (req, res) => {
+  lizlisa.getCalendarList().then((list) => {
+    res.status(200).json(list);
+  })
+  .catch((err) => {
+    console.trace(err);
+    res.status(500).json(err);
+  });
+})
+
 module.exports = router;

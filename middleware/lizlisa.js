@@ -4,8 +4,10 @@ const cheerio = require('cheerio');
 const url = require('../utils/url');
 const title = 'http://www.tokyokawaiilife.jp';
 const Redis = require('../model/db/redis');
+
 const newListModel = require('../model/newList');
 const saleListModel = require('../model/saleList');
+const calendarModel = require('../model/calendar');
 
 let me = this;
 
@@ -115,10 +117,19 @@ me.getSaleList = () => {
   return saleListModel.getSaleList(1);
 }
 
+me.getNewList = () => {
+  return newListModel;
+}
+
+me.getCalendarList = () => {
+  return calendarModel.getNewArrivalDate(1);
+}
+
 module.exports = {
   getSaleList: me.getSaleList,
   //save for test , remove later
   saleList: me.saleList,
   newArrival: me.newArrival,
-  readArrivalNavList: me.readArrivalNavList
+  readArrivalNavList: me.readArrivalNavList,
+  getCalendarList: me.getCalendarList
 }
