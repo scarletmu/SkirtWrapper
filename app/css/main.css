@@ -6,6 +6,10 @@
   #LeftNav {
     display: none;
   }
+  #MainPageCards {
+    flex-direction: column;
+  }
+  
 }
 
 @media all and (min-width: 500px) {
