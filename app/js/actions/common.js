@@ -4,6 +4,7 @@ module.exports = {
   types: {
     setDrawer: 'setDrawer',
     setLists: 'setLists',
+    setListType: 'setListType'
   },
   setLists: function(lists){
     return {
@@ -17,4 +18,10 @@ module.exports = {
       status: status
     };
   },
+  setListType: function(brand){
+    return {
+      type: this.types.setListType,
+      status: status
+    }
+  }
 };

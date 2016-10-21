@@ -30,18 +30,24 @@ export default class App extends React.Component {
         this.state = {
       };
     }
+    //Dispatch function
     handleDrawerStatus (status){
       this.props.dispatch(Action.setDrawer(status));
     }
-    componentWillMount () {
-      this.props.dispatch(Action.setDrawer(false));
+    handleListType (type){
+      this.props.dispatch(Action.setListType(type));
     }
+    //Async function
     setListsAsync () {
         $.get('/lizlisa/getsalelist',{}, (lists) => {
             if(lists){
                 this.props.dispatch(Action.setLists(lists));
             }
         })
+    }
+
+    componentWillMount () {
+      this.props.dispatch(Action.setDrawer(false));
     }
     render () {
         const Child = this.props.children;
@@ -64,7 +70,6 @@ export default class App extends React.Component {
             <div>
                 <Header style={style} handleDrawerStatus={ this.handleDrawerStatus.bind(this) }/>
                 <LeftDrawer drawerStatus={drawerStatus} handleDrawerStatus={ this.handleDrawerStatus.bind(this) }/>
-                {drawerStatus}
                 {Child && React.cloneElement(Child, props[Child.props.route.page || Child.props.route.path])}
             </div>
         );
