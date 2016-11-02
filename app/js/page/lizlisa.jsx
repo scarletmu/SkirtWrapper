@@ -11,15 +11,15 @@ export default class LizLisa extends React.Component {
       this.props.setListsAsync();
     }
     render () {
-        let { GridLists } = this.props;
-        return (
-            <MuiThemeProvider>
-                <div id="MainList" style={{display: "flex"}}>
-                  <LeftNav/>
-                  <ItemList GridLists={ GridLists }/>
-                  <BottomTabs />
-                </div>
-            </MuiThemeProvider>
-        );
+      let { GridLists } = this.props;
+      return (
+        <MuiThemeProvider>
+          <div id="MainList" style={{display: "flex"}}>
+            <LeftNav/>
+            <ItemList GridLists={ GridLists }/>
+            <BottomTabs />
+          </div>
+        </MuiThemeProvider>
+      );
     }
 }

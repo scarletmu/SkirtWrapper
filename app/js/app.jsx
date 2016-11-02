@@ -25,73 +25,73 @@ import About from './page/about.jsx';
 import LizLisa from  './page/lizlisa.jsx'
 
 export default class App extends React.Component {
-    constructor (props, context) {
-      super(props, context);
-        this.state = {
-      };
-    }
-    //Dispatch function
-    handleDrawerStatus (status){
-      this.props.dispatch(Action.setDrawer(status));
-    }
-    handleListType (type){
-      this.props.dispatch(Action.setListType(type));
-    }
-    //Async function
-    setListsAsync () {
-        $.get('/lizlisa/getsalelist',{}, (lists) => {
-            if(lists){
-                this.props.dispatch(Action.setLists(lists));
-            }
-        })
-    }
+  constructor (props, context) {
+    super(props, context);
+      this.state = {
+    };
+  }
+  //Dispatch function
+  handleDrawerStatus (status){
+    this.props.dispatch(Action.setDrawer(status));
+  }
+  handleListType (type){
+    this.props.dispatch(Action.setListType(type));
+  }
+  //Async function
+  setListsAsync () {
+    $.get('/lizlisa/getsalelist',{}, (lists) => {
+      if(lists){
+        this.props.dispatch(Action.setLists(lists));
+      }
+    })
+  }
 
-    componentWillMount () {
-      this.props.dispatch(Action.setDrawer(false));
+  componentWillMount () {
+    this.props.dispatch(Action.setDrawer(false));
+  }
+  render () {
+    const Child = this.props.children;
+    const style = {
     }
-    render () {
-        const Child = this.props.children;
-        const style = {
-        }
-        let {drawerStatus, GridLists} = this.props.reducer;
-        GridLists = GridLists || [];
-        const props = {
-          '/main': {
-          },
-          '/lizlisa': {
-              setListsAsync: this.setListsAsync.bind(this),
-              GridLists
-          },
-          '/about': {
+    let {drawerStatus, GridLists} = this.props.reducer;
+    GridLists = GridLists || [];
+    const props = {
+      '/main': {
+      },
+      '/lizlisa': {
+          setListsAsync: this.setListsAsync.bind(this),
+          GridLists
+      },
+      '/about': {
 
-          }
-        }
-        return (
-            <div>
-                <Header style={style} handleDrawerStatus={ this.handleDrawerStatus.bind(this) }/>
-                <LeftDrawer drawerStatus={drawerStatus} handleDrawerStatus={ this.handleDrawerStatus.bind(this) }/>
-                {Child && React.cloneElement(Child, props[Child.props.route.page || Child.props.route.path])}
-            </div>
-        );
+      }
     }
+    return (
+      <div>
+        <Header style={style} handleDrawerStatus={ this.handleDrawerStatus.bind(this) }/>
+        <LeftDrawer drawerStatus={drawerStatus} handleDrawerStatus={ this.handleDrawerStatus.bind(this) }/>
+        {Child && React.cloneElement(Child, props[Child.props.route.page || Child.props.route.path])}
+      </div>
+    );
+  }
 }
 const mapActionToProps = dispatch => {
-    return {
-        dispatch: dispatch,
-    };
+  return {
+    dispatch: dispatch,
+  };
 };
 
 const ConnectedApp = connect(state => state, mapActionToProps)(App);
 
 ReactDOM.render(
-    <Provider store={ Store }>
-        <Router history={ browserHistory }>
-            <Route path="/" component={ ConnectedApp }>
-                <IndexRoute page="/main" component={ Main }/>
-                <Route path="/lizlisa" component={ LizLisa }/>
-                <Route path="/about" component={ About }/>
-            </Route>
-        </Router>
-    </Provider>, 
-    document.querySelector('#container')
+  <Provider store={ Store }>
+    <Router history={ browserHistory }>
+      <Route path="/" component={ ConnectedApp }>
+        <IndexRoute page="/main" component={ Main }/>
+        <Route path="/lizlisa" component={ LizLisa }/>
+        <Route path="/about" component={ About }/>
+      </Route>
+    </Router>
+  </Provider>, 
+  document.querySelector('#container')
 );
