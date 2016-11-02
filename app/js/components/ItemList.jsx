@@ -20,7 +20,7 @@ const styles = {
 
 export default class ItemList extends React.Component {
   render () {
-    let {GridLists} = this.props;
+    let { GridLists } = this.props;
     return (
       <div style={styles.root}>
         <GridList style={styles.gridList}>

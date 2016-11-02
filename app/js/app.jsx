@@ -12,8 +12,8 @@ const Store = require('./stores/common.js');
 //Tap Event
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
-//jQuery For Ajax
-import $ from 'jquery';
+//Fetch
+import 'whatwg-fetch';
 //Style 
 import '../css/main.css';
 //Components
@@ -37,15 +37,13 @@ export default class App extends React.Component {
   handleListType (type){
     this.props.dispatch(Action.setListType(type));
   }
-  //Async function
-  setListsAsync () {
-    $.get('/lizlisa/getsalelist',{}, (lists) => {
-      if(lists){
-        this.props.dispatch(Action.setLists(lists));
-      }
-    })
+  //Async Dispatch function
+  async setListsAsync (brand, type) {
+    let res = await fetch('/lizlisa/getsalelist');
+    let lists = await res.json();
+    this.props.dispatch(Action.setLists(lists));
   }
-
+  //Do Before Mount 
   componentWillMount () {
     this.props.dispatch(Action.setDrawer(false));
   }
@@ -59,8 +57,8 @@ export default class App extends React.Component {
       '/main': {
       },
       '/lizlisa': {
-          setListsAsync: this.setListsAsync.bind(this),
-          GridLists
+        setListsAsync: this.setListsAsync.bind(this),
+        GridLists
       },
       '/about': {
 
