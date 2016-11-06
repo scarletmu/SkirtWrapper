@@ -2,82 +2,65 @@
 const request = require('request');
 const cheerio = require('cheerio');
 const url = require('../utils/url');
+const network = require('./network');
+const co = require('co');
 const title = 'http://www.tokyokawaiilife.jp';
+//DB
 const Redis = require('../model/db/redis');
-
 const newListModel = require('../model/newList');
 const saleListModel = require('../model/saleList');
 const calendarModel = require('../model/calendar');
 
 let me = this;
+//去换行符
+let clear = (str) => {
+  return str.replace(/\r\n/g,'');
+}
 
 //获取Sale列表
-me.saleList = () => {
-  return saleListModel.cleanSaleList('LizLisa')
-  .then(() => {
-    return new Promise((resolve, reject) => {
-      request(url.lizlisa.saleList, function (err, response, body) {
-        if(err){
-          reject(err);
-        }
-        let $ = cheerio.load(body);
-        let list = me.readList($);
-        resolve(list);
-      });
-    })
-  })
-  .then((data) => {
-    return saleListModel.saveSaleList(data);
+me.updateSaleList = () => {
+  return co(function* (){
+    yield saleListModel.cleanSaleList('LizLisa');
+    let body = yield network.requestBody(url.lizlisa.saleList, 'GET');
+    let $ = cheerio.load(body);
+    let list = me.readList($);
+    return yield saleListModel.saveSaleList(list);
   })
 };
 
 //获取上新列表
-me.newArrival = (URL) => {
-  let target = URL? URL: url.lizlisa.newArrival;
-  return new Promise((resolve, reject) => {
-    request(target, function (err, response, body) {
-      if(err){
-        reject(err);
-      }
-      let $ = cheerio.load(body);
-      let list = me.readList($);
-      let navList = me.readArrivalNavList($);
-      resolve({list, navList});
-    });
-  })
-  .then((data) => {
-    /**Redis储存上新日期列表,用以判断是否需要更新数据库
-     * Key: newArrivalList
-     * type: List
-     */
-    return Redis.lindexAsync('newArrivalList', 0)
-    .then((head) => {
-      if(head && head == data.navList){
-        return Promise.resolve();
-      }else{
-        return Promise.all([
-          newListModel.saveNewList(data.list),
-          Redis.lpush('newArrivalList', data.navList)
-        ])
-      }
-    })
+me.newArrival = () => {
+  let target = url.lizlisa.newArrival.concat('0');
+  return co(function* (){
+    let body = yield network.requestBody(target, 'GET');
+    let $ = cheerio.load(body), list = me.readList($), navList = me.readArrivalNavList($);
+    let dblatest = yield calendarModel.getLatest();
+    if(navList[0] != dblatest[0].date && navList[1] == dblatest[0].date){
+      //日期需要更新
+      let newDate = yield calendarModel.create({Date: navList[0]});
+      let updated = list.map((e) => {
+        e.Date = newDate._id;
+        return e;
+      });
+      return yield newListModel.insertMany(updated);
+    }else{
+      //已经是最新
+      return yield Promise.resolve('Already Latest');
+    }
   })
 }
+
 //解析部分
 //解析左侧日期导航返回最新一条
 me.readArrivalNavList = ($) => {
   let result = [];
   let list = $('.nav-list').children();
-  // for (let i = 0; i < list.length; i++) {
-  //   let url = title + list[i].children[1].attribs.href;
-  //   let date = list[i].children[1].children[0].data;
-  //   let singleItem = {
-  //     date: date
-  //   }
-  //   result.push(singleItem);
-  // }
-  let date = list[0].children[1].children[0].data.replace(/\r\n/g,'');
-  return date;
+  for (let i = 0; i < list.length; i++) {
+    let str = clear(list[i].children[1].children[0].data);
+    let date = str.slice(0, 10).trim();
+    result.push(date);
+  }
+  return result;
 }
 //解析主列表
 me.readList = ($) => {
@@ -112,18 +95,7 @@ me.readList = ($) => {
   }
   return result;
 };
-//路由
-me.getSaleList = () => {
-  return saleListModel.getSaleList(1);
-}
 
-me.getNewList = () => {
-  return newListModel;
-}
-
-me.getCalendarList = () => {
-  return calendarModel.getNewArrivalDate(1);
-}
 
 module.exports = {
   getSaleList: me.getSaleList,

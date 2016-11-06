@@ -27,6 +27,7 @@ const NewListSchema = new mongoose.Schema({
   Name: String,
   Price: String,
   Brand: String,
+  Date: mongoose.Schema.Types.ObjectId,
   createdAt: {type: Date, default: Date.now }
 });
 
