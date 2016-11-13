@@ -5,7 +5,7 @@ const lizlisa = require('../middleware/lizlisa');
 
 
 router.get('/salelist',function(req,res,next){
-  lizlisa.saleList().then((list) => {
+  lizlisa.updateSaleList().then((list) => {
     res.status(200).json('更新成功');
   })
   .catch((err) => {
@@ -15,7 +15,7 @@ router.get('/salelist',function(req,res,next){
 });
 
 router.get('/newarrival',function(req,res,next){
-  lizlisa.newArrival().then((list) => {
+  lizlisa.updateNewArrival().then((list) => {
     res.status(200).json('更新成功');
   })
   .catch((err) => {

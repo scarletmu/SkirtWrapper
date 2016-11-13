@@ -4,6 +4,7 @@ const cheerio = require('cheerio');
 const url = require('../utils/url');
 const network = require('./network');
 const co = require('co');
+const Promise = require('bluebird');
 const title = 'http://www.tokyokawaiilife.jp';
 //DB
 const Redis = require('../model/db/redis');
@@ -17,6 +18,8 @@ let clear = (str) => {
   return str.replace(/\r\n/g,'');
 }
 
+//刷新操作
+
 //获取Sale列表
 me.updateSaleList = () => {
   return co(function* (){
@@ -27,22 +30,34 @@ me.updateSaleList = () => {
     return yield saleListModel.saveSaleList(list);
   })
 };
+/**
+ * DB添加上新列表
+ * @param 日期
+ * @param 当日数据
+ */
+me.createNewArrival = (day, list) => {
+  return co(function* (){
+    let newDate = yield calendarModel.create({Date: day});
+    let updated = list.map((e) => {
+      e.Date = newDate._id;
+      return e;
+    })
+    return yield newListModel.insertMany(update);
+  })
+}
 
-//获取上新列表
-me.newArrival = () => {
-  let target = url.lizlisa.newArrival.concat('0');
+//更新上新列表
+me.updateNewArrival = (index = 0) => {
+  let target = url.lizlisa.newArrival.concat(index);
   return co(function* (){
     let body = yield network.requestBody(target, 'GET');
     let $ = cheerio.load(body), list = me.readList($), navList = me.readArrivalNavList($);
     let dblatest = yield calendarModel.getLatest();
     if(navList[0] != dblatest[0].date && navList[1] == dblatest[0].date){
-      //日期需要更新
-      let newDate = yield calendarModel.create({Date: navList[0]});
-      let updated = list.map((e) => {
-        e.Date = newDate._id;
-        return e;
-      });
-      return yield newListModel.insertMany(updated);
+      return me.createNewArrival(navList[0], list);
+    }else if((navList[0] != dblatest[0].date && navList[1] == dblatest[0].date) || dblatest.length == 0){
+      me.init();
+      return yield Promise.resolve('Start Re-Init');
     }else{
       //已经是最新
       return yield Promise.resolve('Already Latest');
@@ -50,8 +65,27 @@ me.newArrival = () => {
   })
 }
 
+//初始化
+me.init = () => {
+  co(function* (){
+    let dblatest = yield calendarModel.getLatest();
+    if(dblatest.length == 0){
+      //初始化
+      let body = yield network.requestBody(url.lizlisa.newArrival, 'GET');
+      let $ = cheerio.load(body), list = me.readList($), navList = me.readArrivalNavList($);
+      for(let i = 0; i < navList.length; i++){
+        let target = url.lizlisa.newArrival.concat(index);
+      }
+    }else{
+      //多条不匹配重匹配
+    }
+  })
+};
+
+
 //解析部分
-//解析左侧日期导航返回最新一条
+
+//解析左侧日期导航
 me.readArrivalNavList = ($) => {
   let result = [];
   let list = $('.nav-list').children();
@@ -98,10 +132,6 @@ me.readList = ($) => {
 
 
 module.exports = {
-  getSaleList: me.getSaleList,
-  //save for test , remove later
-  saleList: me.saleList,
-  newArrival: me.newArrival,
-  readArrivalNavList: me.readArrivalNavList,
-  getCalendarList: me.getCalendarList
+  updateSaleList: me.updateSaleList,
+  updateNewArrival: me.updateNewArrival,
 }
