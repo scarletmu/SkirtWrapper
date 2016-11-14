@@ -5,6 +5,7 @@ const url = require('../utils/url');
 const network = require('./network');
 const co = require('co');
 const Promise = require('bluebird');
+const _ = require('lodash');
 const title = 'http://www.tokyokawaiilife.jp';
 //DB
 const Redis = require('../model/db/redis');
@@ -34,6 +35,7 @@ me.updateSaleList = () => {
  * DB添加上新列表
  * @param 日期
  * @param 当日数据
+ * @return Promise(创建结果)
  */
 me.createNewArrival = (day, list) => {
   return co(function* (){
@@ -46,7 +48,11 @@ me.createNewArrival = (day, list) => {
   })
 }
 
-//更新上新列表
+/**
+ * 更新上新列表
+ * @param index(即网页后缀的index,默认为0)
+ * @return Promise(创建结果)
+ */
 me.updateNewArrival = (index = 0) => {
   let target = url.lizlisa.newArrival.concat(index);
   return co(function* (){
@@ -69,16 +75,40 @@ me.updateNewArrival = (index = 0) => {
 me.init = () => {
   co(function* (){
     let dblatest = yield calendarModel.getLatest();
+    let latestDate = dblatest.map((e) => e.date);
+    let body = yield network.requestBody(url.lizlisa.newArrival, 'GET');
+    let root$ = cheerio.load(body), rootNavList = me.readArrivalNavList(root$);
     if(dblatest.length == 0){
       //初始化
-      let body = yield network.requestBody(url.lizlisa.newArrival, 'GET');
-      let $ = cheerio.load(body), list = me.readList($), navList = me.readArrivalNavList($);
-      for(let i = 0; i < navList.length; i++){
-        let target = url.lizlisa.newArrival.concat(index);
+      console.log('Start Init');
+      for(let i = 0; i < rootNavList.length; i++){
+        let target = url.lizlisa.newArrival.concat(i);
+        let body = yield network.requestBody(target, 'GET');
+        let $ = cheerio.load(body), list = me.readList($);
+        yield me.createNewArrival(rootNavList[i], list);        
       }
+      return yield Promise.resolve('Init Success');
     }else{
       //多条不匹配重匹配
+      console.log('Start Re-Match');
+      let diff = _.difference(rootNavList, latestDate);
+      for(let i = 0; i < diff.length; i++){
+        let target = url.lizlisa.newArrival.concat(i);
+        let body = yield network.requestBody(target, 'GET');
+        let $ = cheerio.load(body), list = me.readList($);
+        yield me.createNewArrival(rootNavList[i], list);        
+      }
+      return yield Promise.resolve('Rematch Success');
     }
+  })
+  .then((suc) => {
+    console.log(suc);
+  })
+  .catch((err) => {
+    console.error(err);
+    setTimeout(() => {
+      me.init();
+    }, 15 * 1000);
   })
 };
 
