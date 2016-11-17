@@ -44,7 +44,7 @@ me.createNewArrival = (day, list) => {
       e.Date = newDate._id;
       return e;
     })
-    return yield newListModel.insertMany(update);
+    return yield newListModel.insertMany(updated);
   })
 }
 
@@ -75,7 +75,7 @@ me.updateNewArrival = (index = 0) => {
 me.init = () => {
   co(function* (){
     let dblatest = yield calendarModel.getLatest();
-    let latestDate = dblatest.map((e) => e.date);
+    let latestDate = dblatest.map((e) => e.Date);
     let body = yield network.requestBody(url.lizlisa.newArrival, 'GET');
     let root$ = cheerio.load(body), rootNavList = me.readArrivalNavList(root$);
     if(dblatest.length == 0){
@@ -92,11 +92,15 @@ me.init = () => {
       //多条不匹配重匹配
       console.log('Start Re-Match');
       let diff = _.difference(rootNavList, latestDate);
+      console.log('Difference');
+      console.log(diff);
       for(let i = 0; i < diff.length; i++){
-        let target = url.lizlisa.newArrival.concat(i);
+        let pos = rootNavList.indexOf(diff[i]);
+        let target = url.lizlisa.newArrival.concat(pos);
+        console.log(target);
         let body = yield network.requestBody(target, 'GET');
         let $ = cheerio.load(body), list = me.readList($);
-        yield me.createNewArrival(rootNavList[i], list);        
+        yield me.createNewArrival(diff[i], list);        
       }
       return yield Promise.resolve('Rematch Success');
     }
@@ -137,7 +141,15 @@ me.readList = ($) => {
     let url = title + figure.children[0].attribs.href;
     let singleItem = {};
     //Price子节点区分
-    if(itemText.children[7].children[1]){
+    if(itemText.children.length == 7){
+      singleItem = {
+        Url: url,
+        Avatar: figure.children[0].children[1].attribs.src,
+        Name:itemText.children[3].children[0].children[0].data.replace(/\r\n/g,''),
+        Price:itemText.children[5].children[0].data.replace(/\r\n/g,''),
+        Brand: 'LizLisa'
+      } 
+    }else if(itemText.children[7].children.length !== 1){
       singleItem = {
         Url: url,
         Avatar: figure.children[0].children[1].attribs.src,
@@ -164,4 +176,5 @@ me.readList = ($) => {
 module.exports = {
   updateSaleList: me.updateSaleList,
   updateNewArrival: me.updateNewArrival,
+  init: me.init
 }
