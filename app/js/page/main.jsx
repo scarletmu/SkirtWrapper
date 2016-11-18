@@ -7,7 +7,8 @@ export default class About extends React.Component {
   render () {
     const MainStyle = {
       display: 'flex',
-      paddingTop: '50px'
+      paddingTop: '10px',
+      width: '100%'
     }
     const padding = {
       padding: '5px 5px'
@@ -23,10 +24,7 @@ export default class About extends React.Component {
           </CardMedia>
           <CardTitle title="Liz Lisa" subtitle="Card subtitle" />
           <CardText>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+              Lizlisa
           </CardText>
           <CardActions>
             <FlatButton label="Action1" />
@@ -41,10 +39,7 @@ export default class About extends React.Component {
           </CardMedia>
           <CardTitle title="Ank Rouge" subtitle="Card subtitle" />
           <CardText>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+              AnkRouge
           </CardText>
           <CardActions>
               <FlatButton label="Action1" />
@@ -59,10 +54,7 @@ export default class About extends React.Component {
           </CardMedia>
           <CardTitle title="Liz Lisa" subtitle="Card subtitle" />
           <CardText>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+             Axes
           </CardText>
           <CardActions>
               <FlatButton label="Action1" />

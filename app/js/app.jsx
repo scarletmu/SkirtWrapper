@@ -34,14 +34,29 @@ export default class App extends React.Component {
   handleDrawerStatus (status){
     this.props.dispatch(Action.setDrawer(status));
   }
-  handleListType (type){
-    this.props.dispatch(Action.setListType(type));
+  handleBrandType (brand){
+    this.props.dispatch(Action.setBrandType(brand));
   }
   //Async Dispatch function
+
+  /**
+   * 更新显示列表的数据
+   * @param 品牌
+   * @param 列表类型
+   */
   async setListsAsync (brand, type) {
-    let res = await fetch('/lizlisa/getsalelist');
+    let url = `/${brand}/${type}`; 
+    let res = await fetch(url);
     let lists = await res.json();
     this.props.dispatch(Action.setLists(lists));
+  }
+  /**
+   * 更新日期缓存
+   */
+  async setCalendarAsync (){
+    let res = await fetch('/getCalendar');
+    let calendar = await res.json(); 
+    this.props.dispatch(Action.setLists(calendar));
   }
   //Do Before Mount 
   componentWillMount () {
@@ -55,6 +70,7 @@ export default class App extends React.Component {
     GridLists = GridLists || [];
     const props = {
       '/main': {
+
       },
       '/lizlisa': {
         setListsAsync: this.setListsAsync.bind(this),
