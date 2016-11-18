@@ -23,14 +23,23 @@ let clear = (str) => {
 
 //获取Sale列表
 me.updateSaleList = () => {
-  return co(function* (){
+  co(function* (){
     yield saleListModel.cleanSaleList('LizLisa');
     let body = yield network.requestBody(url.lizlisa.saleList, 'GET');
     let $ = cheerio.load(body);
     let list = me.readList($);
     return yield saleListModel.saveSaleList(list);
   })
+  .then((data) => {
+    console.log('Update Latest Sale List Success');
+  })
+  .catch((err) => {
+    console.error('Update Latest Sale List Failed');
+    console.error(err);
+  })
 };
+
+
 /**
  * DB添加上新列表
  * @param 日期
@@ -71,8 +80,8 @@ me.updateNewArrival = (index = 0) => {
   })
 }
 
-//初始化
-me.init = () => {
+//初始化上新
+me.initArrival = () => {
   co(function* (){
     let dblatest = yield calendarModel.getLatest();
     let latestDate = dblatest.map((e) => e.Date);
@@ -116,7 +125,6 @@ me.init = () => {
   })
 };
 
-
 //解析部分
 
 //解析左侧日期导航
@@ -130,6 +138,7 @@ me.readArrivalNavList = ($) => {
   }
   return result;
 }
+
 //解析主列表
 me.readList = ($) => {
   let result = [];
@@ -176,5 +185,5 @@ me.readList = ($) => {
 module.exports = {
   updateSaleList: me.updateSaleList,
   updateNewArrival: me.updateNewArrival,
-  init: me.init
+  initArrival: me.initArrival
 }

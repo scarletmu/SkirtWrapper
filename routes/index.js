@@ -1,10 +1,17 @@
 'use strict';
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const api = require('../middleware/api');
 
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  
-});
+//按日期获取上新
+router.get('/:brand/getNewList', api.getNewArrivalByDay);
+
+router.get('/:brand/getSaleList', api.getSaleList);
+
+router.get('/getSaleList', api.getSaleList);
+
+router.get('/getNewList', api.getNewArrivalByDay);
+
+router.get('/getCalendar', api.getCalendar);
 module.exports = router;

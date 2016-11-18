@@ -25,18 +25,22 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'app')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-(function loadRoute(){
-  var files = fs.readdirSync('routes');
-  files.forEach(function (e) {
-    if (e.match(/\.js$/i)){
-      app.use('/' + path.basename(e, path.extname(e)) //route url
-        , require(path.join(path.join(__dirname, 'routes'), e)));
-    }
-  })
-})();
+// (function loadRoute(){
+//   var files = fs.readdirSync('routes');
+//   files.forEach(function (e) {
+//     if (e.match(/\.js$/i)){
+//       app.use('/' + path.basename(e, path.extname(e)) //route url
+//         , require(path.join(path.join(__dirname, 'routes'), e)));
+//     }
+//   })
+// })();
+//暂时使用单文件路由
+const index = require('./routes/index');
+app.use('/', index);
 
-let { init } = require('./middleware/lizlisa');
-setTimeout(init, 10 * 1000);
+let { initArrival, updateSaleList } = require('./middleware/lizlisa');
+setTimeout(initArrival, 10 * 1000);
+setTimeout(updateSaleList, 15 * 1000);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
